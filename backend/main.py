@@ -3,8 +3,18 @@ from api.transcribe import transcribe_audio
 from api.summarizer import summarize_call
 from api.sentiment import analyze_sentiment
 import tempfile
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # React dev server origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/analyze/")
 async def analyze(file: UploadFile):
